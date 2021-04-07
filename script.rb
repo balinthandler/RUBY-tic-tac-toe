@@ -4,10 +4,15 @@ class Game
   def initialize
     @players = []
     @table = Board.new()
+    
     2.times { |i|
     puts "Player #{i+1}"
     puts "What's your name?"
     name = gets.chomp
+    until name.length > 0
+      puts "Name is too short, enter name!"
+      name = gets.chomp
+    end
 
     if i > 0 
       if @players[0].sign == 'O'
@@ -22,7 +27,6 @@ class Game
         puts "Please choose between O and X!"
         sign = gets.chomp.upcase
       end
-
     end
 
     @players[i] = Player.new(name,sign)
@@ -73,7 +77,7 @@ class Game
       end
       move_array = [move[1].to_i - 1, (move[0].ord-17).chr.to_i]
       @table.input(move_array[0],move_array[1],sign)
-      puts "- - - - - - - - - - - - - - - - -"
+      puts "                                        "
       @table.show_board
       @table.board_evaluation(@players)
       turn += 1
@@ -180,7 +184,7 @@ class Board
   
   #show winner
   def show_winner(winner)
-    puts "#{winner} have won the match"
+    puts "#{winner} have won the match!"
   end
 
   #reset board and game_ended boolean
@@ -188,7 +192,6 @@ class Board
 		@board = [['-','-','-'],['-','-','-'],['-','-','-']]
     @game_ended = false
 	end
-
 
 end
 
